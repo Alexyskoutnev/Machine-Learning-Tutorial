@@ -152,8 +152,6 @@ def calc_error(model, X, y):
     correct = sum(abs(y - y_pred))
     return 1 - (correct / cnt), correct
 
-
-
 def load_data(num_samples=100, num_features=1, ceoff=None, seed=None):
     """
     Generate synthetic data for logistic regression.
