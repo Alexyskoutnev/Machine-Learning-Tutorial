@@ -26,7 +26,7 @@ This tutorial covers a wide range of machine learning algorithms, including:
 7. Naive Bayes
 8. Principal Component Analysis (PCA)
 9. K-Means Clustering
-10. Maximum Likelihood Estimate
+10. Maximum Likelihood Estimate (MLE)
 11. Gradient Boosting
 12. Neural Networks (Deep Learning)
 13. Recommender Systems
