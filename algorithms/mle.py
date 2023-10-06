@@ -76,14 +76,12 @@ class MLE(object):
         plt.legend()
         plt.show()
 
-
 def load_data(num_samples, mu=0, std=1, noise=False):
     data_normal = np.random.normal(mu, std, num_samples)
     if noise:
         noise_values = np.random.normal(0, 0.1, num_samples)
         data_normal += noise_values
     return data_normal
-
 
 if __name__ == "__main__":
     num_samples = 10000
@@ -93,4 +91,3 @@ if __name__ == "__main__":
     mle_model = MLE()
     mle_model.fit(X)
     mle_model.plot(X)
-    breakpoint()
