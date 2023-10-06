@@ -37,7 +37,7 @@ This tutorial covers a wide range of machine learning algorithms, including:
 1. Clone this repository to your local machine:
 
 ```console
-git clone https://github.com/your-username/machine-learning-tutorial.git
+git clone git@github.com:Alexyskoutnev/Machine-Learning-Tutorial.git
 ```
 
 2. Explore the folders and choose a topic or algorithm you'd like to learn or practice.
