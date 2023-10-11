@@ -44,8 +44,10 @@ def make_psd(A, esp=1e-6):
 
     return A_psd
 
+class SVMLinear(object):
+    pass
 
-class SVM:
+class SVM(object):
     """
     Support Vector Machine (SVM) classifier with optimization-based training.
 
