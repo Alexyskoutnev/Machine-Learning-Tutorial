@@ -33,15 +33,13 @@ def test_data(num_samples, n_features, seed=0):
     y (numpy.ndarray): Binary labels (0 or 1) based on a decision boundary with shape (num_samples).
     """
     np.random.seed(0)
-    num_samples = num_samples
-    num_features = n_features
-    X = np.random.rand(num_samples, num_features)
+    X = np.random.rand(num_samples, n_features)
     y = np.zeros(num_samples)
     for i in range(num_samples):
         if np.sqrt(X[i, 0]**2 + X[i, 1]**2) > 0.5:
             y[i] = 1
     return X, y
-
+    
 def plot_decision_boundary(X, y, decision_tree, title="Decision Node Boundary"):
     """
     Visualize the decision boundary of the decision tree.
