@@ -121,10 +121,8 @@ def train(network, X, y, epochs=10, lr=0.001, batch_size=64):
     for epoch in range(epochs):
             total_samples = X.size(0)
             for i in range(0, total_samples, batch_size):
-                # Get a mini-batch
                 batch_X = X[i:i+batch_size]
                 batch_y = y[i:i+batch_size]
-                
                 optimizer.zero_grad()  # Zero the gradient buffers
                 outputs = network(batch_X)  # Forward pass
                 loss = criterion(outputs, batch_y.view(-1, 1))  # Calculate the loss
