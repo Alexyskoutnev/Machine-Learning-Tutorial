@@ -105,7 +105,7 @@ class NNClassifer(nn.Module):
         plt.title('Decision Boundary')
         plt.show()
 
-def train(network, X, y, epochs=10, lr=0.001):
+def train(network, X, y, epochs=10, lr=0.001, batch_size=64):
     """
     Train the binary classifier network.
 
@@ -119,20 +119,29 @@ def train(network, X, y, epochs=10, lr=0.001):
     criterion = nn.BCEWithLogitsLoss()  # Binary Cross-Entropy Loss
     optimizer = optim.Adam(network.parameters(), lr=lr)
     for epoch in range(epochs):
-        optimizer.zero_grad()  # Zero the gradient buffers
-        outputs = network(X)  # Forward pass
-        loss = criterion(outputs, y.view(-1, 1))  # Calculate the loss
-        loss.backward()  # Backpropagation
-        optimizer.step()  # Update the weights
-        if (epoch + 1) % 10 == 0:
-            print(f'Epoch [{epoch + 1}/{epochs}], Loss: {loss.item()}')
+            total_samples = X.size(0)
+            for i in range(0, total_samples, batch_size):
+                # Get a mini-batch
+                batch_X = X[i:i+batch_size]
+                batch_y = y[i:i+batch_size]
+                
+                optimizer.zero_grad()  # Zero the gradient buffers
+                outputs = network(batch_X)  # Forward pass
+                loss = criterion(outputs, batch_y.view(-1, 1))  # Calculate the loss
+                loss.backward()  # Backpropagation
+                optimizer.step()  # Update the weights
+            
+            if (epoch + 1) % 10 == 0:
+                print(f'Epoch [{epoch + 1}/{epochs}], Loss: {loss.item()}')
 
 if __name__ == "__main__":
     input_size, output_size = 2, 1
-    epochs, lr = 1000, 0.001 #training hyperparameters for a trivial neural network (number of times to go over dataset and the gradient step for backprob)
+    epochs, lr = 1000, 0.01 #training hyperparameters for a trivial neural network (number of times to go over dataset and the gradient step for backprob)
     num_samples, feature = 1000, input_size
     network = NNClassifer(input_size, output_size)
     X, y = test_data(num_samples)
     train(network, X, y, epochs=epochs, lr=lr)
+    x = torch.tensor([[1, 1]], dtype=torch.float32)
+    y_pred = network(x)
     network.plot(X, y)
 
