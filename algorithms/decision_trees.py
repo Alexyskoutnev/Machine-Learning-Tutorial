@@ -146,6 +146,7 @@ class DecisionTree(object):
         Returns:
         int: The predicted class label.
         """
+        breakpoint()
         return self._predict(x, self.node)
 
     def entropy(self, y):
@@ -182,6 +183,17 @@ class DecisionTree(object):
         p_left = sum(y_left) / len(y_left)
         p_right = sum(y_right) / len(y_right)
         return H_y - (p_left * H_y_left + p_right * H_y_right) #Information gain = H(s) - sum(|s_i| / |s| * H(s_i)) where i is index for a partition set s_i
+
+    def _sample(self, X, sample_weight):
+        total_weight = sum(sample_weight)
+        normalized_weights = [ w / total_weight for w in sample_weight]
+        cumulative_probabilities = np.cumsum(normalized_weights)
+        samples = np.zeros_like(X)
+        for i in range(X.shape[0]):
+            random_value = np.random.rand()  # Generate a random value between 0 and 1
+            selected_sample_index = np.searchsorted(cumulative_probabilities, random_value)
+            samples[i] = X[selected_sample_index]
+        return samples
 
     def split(self, X, y):
         """
@@ -229,7 +241,7 @@ class DecisionTree(object):
         d_tree.left = Node(depth=depth + 1)
         d_tree.right = Node(depth=depth + 1)
 
-    def fit(self, X, y, d_tree, depth=0):
+    def fit(self, X, y, d_tree, depth=0, sample_weights=None):
         """
         Recursively build the decision tree.
 
@@ -242,6 +254,8 @@ class DecisionTree(object):
         Returns:
         Node: The root node of the decision tree.
         """
+        if sample_weights is not None:
+            X = self._sample(X, sample_weights)
         if depth == self.max_depth or np.all(y == y[0]): #stop case for recursion if all the data contains the same labels
             d_tree.label = int(np.mean(y))
             return
