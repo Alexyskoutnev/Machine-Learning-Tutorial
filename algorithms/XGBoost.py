@@ -60,7 +60,7 @@ class XGBoost(object):
     - model (XGBoost Booster): The trained XGBoost model.
     """
 
-    def __init__(self, n_estimators=200, learning_rate=0.01, max_depth=4):
+    def __init__(self, n_estimators=100, learning_rate=0.01, max_depth=2):
         """
         Initialize an XGBoost classifier with hyperparameters.
 
@@ -157,8 +157,6 @@ if __name__ == "__main__":
     xgboost_model.fit(X_train, y_train)
     y_pred = xgboost_model.predict(X_test)
     plot_confusion_matrix(y_test, y_pred)
-    breakpoint()
-    print(f"Model accurancy: [{sum(y_test - y_pred) / len(y_test)}:.2f]")
-    breakpoint()
+    print(f"Model accurancy: [{sum(y_test - y_pred) / len(y_test):.2f}]")
 
         
