@@ -31,11 +31,24 @@ def generate_synthetic_dataset(n_samples=100, n_features=2, n_informative=2, n_r
 class Adaboost(object):
 
     def __init__(self, n_estimators=50):
+        """
+        Initialize an AdaBoost classifier.
+
+        Parameters:
+        - n_estimators: Number of AdaBoost iterations (weak classifiers).
+        """
         self.n_estimators = n_estimators
         self.alphas = []
         self.stumps = []
 
     def fit(self, X, y):
+        """
+        Fit the AdaBoost ensemble on the training data.
+
+        Parameters:
+        - X: Training data feature matrix.
+        - y: Training data target labels.
+        """
         n_samples, n_features = X.shape
         w = np.ones(n_samples) / n_samples
         for _ in range(self.n_estimators):
@@ -50,12 +63,28 @@ class Adaboost(object):
             self.stumps.append(stump)
 
     def predict(self, X):
+        """
+        Make predictions on new data using the trained AdaBoost ensemble.
+
+        Parameters:
+        - X: New data feature matrix.
+
+        Returns:
+        - Predicted class labels.
+        """
         n_samples = X.shape[0]
         stump_prediction = np.array([stump.predict(X) for stump in self.stumps])
         weighted_prediction = np.dot(self.alphas, stump_prediction)
         return np.sign(weighted_prediction)
 
     def plot(self, X, y):
+        """
+        Plot the decision boundary of the AdaBoost ensemble.
+
+        Parameters:
+        - X: Feature matrix for plotting.
+        - y: True class labels for plotting.
+        """
         h = .1  # Step size in the mesh
         cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA'])  # Light colors for background
         cmap_bold = ListedColormap(['#FF0000', '#00FF00'])  # Bold colors for points
